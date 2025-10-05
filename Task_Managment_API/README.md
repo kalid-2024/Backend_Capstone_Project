@@ -51,27 +51,27 @@ venv\Scripts\activate      # On Windows
 
 Install dependencies:
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 
 Apply migrations:
 
-python manage.py makemigrations
-python manage.py migrate
+    python manage.py makemigrations
+    python manage.py migrate
 
 
 Create a superuser:
 
-python manage.py createsuperuser
+    python manage.py createsuperuser
 
 
 Run the development server:
 
-python manage.py runserver
+    python manage.py runserver
 
 🔑 Authentication
 
-Obtain JWT token:
+    Obtain JWT token:
 
 POST /api/token/
 {
@@ -96,14 +96,16 @@ POST /api/token/refresh/
 }
 
 📌 API Endpoints
-Method	Endpoint	Description	Auth Required
-POST	/api/token/	Obtain JWT access & refresh token	No
-POST	/api/token/refresh/	Refresh JWT token	No
-GET	/api/tasks/	List all tasks for logged-in user	Yes
-POST	/api/tasks/	Create a new task	Yes
-GET	/api/tasks/{id}/	Retrieve a specific task	Yes
-PUT	/api/tasks/{id}/	Update a task	Yes
-DELETE	/api/tasks/{id}/	Delete a task	Yes
+| Method | Endpoint              | Description                       | Auth Required |
+|--------|----------------------|-----------------------------------|---------------|
+| POST   | /api/token/           | Obtain JWT access & refresh token | No            |
+| POST   | /api/token/refresh/   | Refresh JWT token                 | No            |
+| GET    | /api/tasks/           | List all tasks for logged-in user | Yes           |
+| POST   | /api/tasks/           | Create a new task                 | Yes           |
+| GET    | /api/tasks/{id}/      | Retrieve a specific task          | Yes           |
+| PUT    | /api/tasks/{id}/      | Update a task                     | Yes           |
+| DELETE | /api/tasks/{id}/      | Delete a task                     | Yes           |
+
 ✅ Example Task Object
 {
   "id": 1,
