@@ -53,6 +53,6 @@ class TaskViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["post"])
     def mark_incomplete(self, request, pk=None):
         task =self.get_object()
-        task.mark_incompleted()
+        task.mark_incomplete()
         serializer = self.get_serializer(task)
         return Response(serializer.data, status=status.HTTP_200_OK)
