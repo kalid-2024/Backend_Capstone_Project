@@ -57,6 +57,6 @@ class Task(models.Model):
             self.save(update_fields=['status', 'completed_at', 'updated_at'])
 
     def __str__(self) -> str:
-        return f"{self.title} - {'Completed' if self.status else 'Pending'}"
+        return f"{self.title} - {'Completed' if self.status == 'completed' else 'Pending'}"
 
     

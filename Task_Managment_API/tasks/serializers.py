@@ -32,7 +32,7 @@ class TaskSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Task
-        fields = ['id','title','description','completed','created_at','due_date','status','priority','owner','updated_at','completed_at']
+        fields = ['id','title','description','created_at','due_date','status','priority','owner','updated_at','completed_at']
         read_only_fields = ['id', 'owner', 'created_at', 'updated_at','completed_at']
     
     def validate_title(self, value):
@@ -45,3 +45,8 @@ class TaskSerializer(serializers.ModelSerializer):
         if value < timezone.now():
             raise serializers.ValidationError("Due date cannot be in the past.")
         return value
+    
+    def update(self, instance, validated_data):
+        if instance.status == "completed" and validated_data.get("status", "completed") == "completed":
+            raise serializers.ValidationError("Cannot edit a completed task. Mark it incomplete first.")
+        return super().update(instance, validated_data)
