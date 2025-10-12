@@ -6,8 +6,7 @@ from .models import Task
 from .serializers import TaskSerializer
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
-# from .permissions import IsOwner, IsAdminOrSelf
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 
 User = get_user_model()
 # Create your views here.
@@ -25,6 +24,10 @@ class TaskViewSet(viewsets.ModelViewSet):
     search_fields = ["title", "description"]
     ordering_fields = ["due_date", "priority", "created_at"]
 
+    def get_queryset(self):
+        # Return tasks only for the logged-in user
+        return self.queryset.filter(owner=self.request.user)
+        
     def perform_create(self, serializer):
         # Set the owner of the task to the logged-in user
         serializer.save(owner=self.request.user)
