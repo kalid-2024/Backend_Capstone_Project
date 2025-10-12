@@ -5,8 +5,8 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Task
 from .serializers import TaskSerializer, UserSerializer
 from django.contrib.auth import get_user_model
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminorSelf
-from .permissions import IsOwner,IsAdminorSelf
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .permissions import IsOwner,IsAdminOrSelf
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -23,7 +23,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ["create"]:
             return [AllowAny()]
-        return [IsAdminorSelf()]
+        return [IsAdminOrSelf()]
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
