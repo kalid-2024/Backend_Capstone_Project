@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -9,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .permissions import IsOwner, IsAdminOrSelf
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 User = get_user_model()
@@ -32,14 +34,17 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    @action(detail=False, methods=['get'], permission_classes=[AllowAny])
+    @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def login(self,request):
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(request, username=username, password=password)
         if user:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
@@ -66,22 +71,22 @@ class TaskViewSet(viewsets.ModelViewSet):
         # Set the owner of the task to the logged-in user
         serializer.save(owner=self.request.user)
     
-    @action(detail= True, methods=["post"], )
-    def mark_complete(self, request, pk=None):
+    @action(detail= True, methods=["patch"],permission_classes=[IsAuthenticated, IsOwner] )
+    def complete(self, request, pk=None):
         task = self.get_object()
         task.mark_completed()
         serializer = self.get_serializer(task)
         return Response( serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=["post"])
-    def mark_incomplete(self, request, pk=None):
+    @action(detail=True, methods=["patch"],permission_classes=[IsAuthenticated, IsOwner] )
+    def incomplete(self, request, pk=None):
         task =self.get_object()
         task.mark_incomplete()
         serializer = self.get_serializer(task)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated, IsOwner])
-    def complete(self, request, pk=None):
+    def toggle_complete(self, request, pk=None):
         task = self.get_object()
         if task.status == 'completed':
             task.mark_incomplete()
