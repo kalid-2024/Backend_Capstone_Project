@@ -180,7 +180,7 @@ Create a superuser:
 📌 API Endpoints
 | Method | Endpoint              | Description                       | Auth Required |
 |--------|----------------------|-----------------------------------|---------------|
-| POST   | /api/token/           | Obtain JWT access & refresh token | No            |
+| POST   | /api/users/login/     | Obtain JWT access & refresh token | No            |
 | POST   | /api/token/refresh/   | Refresh JWT token                 | No            |
 | GET    | /api/tasks/           | List all tasks for logged-in user | Yes           |
 | POST   | /api/tasks/           | Create a new task                 | Yes           |
