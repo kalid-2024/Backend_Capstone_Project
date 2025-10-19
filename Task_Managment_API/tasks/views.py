@@ -32,7 +32,11 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            {
+            "message": "User registered successfully",
+            "user": serializer.data
+        }, status=status.HTTP_201_CREATED )
 
     @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def login(self,request):
@@ -71,22 +75,22 @@ class TaskViewSet(viewsets.ModelViewSet):
         # Set the owner of the task to the logged-in user
         serializer.save(owner=self.request.user)
     
-    @action(detail= True, methods=["patch"],permission_classes=[IsAuthenticated, IsOwner] )
-    def complete(self, request, pk=None):
-        task = self.get_object()
-        task.mark_completed()
-        serializer = self.get_serializer(task)
-        return Response( serializer.data, status=status.HTTP_200_OK)
+    # @action(detail= True, methods=["patch"],permission_classes=[IsAuthenticated, IsOwner] )
+    # def complete(self, request, pk=None):
+    #     task = self.get_object()
+    #     task.mark_completed()
+    #     serializer = self.get_serializer(task)
+    #     return Response( serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=["patch"],permission_classes=[IsAuthenticated, IsOwner] )
-    def incomplete(self, request, pk=None):
-        task =self.get_object()
-        task.mark_incomplete()
-        serializer = self.get_serializer(task)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # @action(detail=True, methods=["patch"],permission_classes=[IsAuthenticated, IsOwner] )
+    # def incomplete(self, request, pk=None):
+    #     task =self.get_object()
+    #     task.mark_incomplete()
+    #     serializer = self.get_serializer(task)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated, IsOwner])
-    def toggle_complete(self, request, pk=None):
+    def complete(self, request, pk=None):
         task = self.get_object()
         if task.status == 'completed':
             task.mark_incomplete()
