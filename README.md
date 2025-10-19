@@ -4,16 +4,14 @@ A Django REST Framework–based API that allows users to manage their tasks with
 
 🚀 Features
 
- User Authentication
- Custom user model (CustomUser)
- JWT authentication with access & refresh tokens
- Task Management
- Create, update, delete, and view tasks
- Mark tasks as complete or incomplete
- User-specific tasks (each user only sees their own tasks)
- Security
- Authentication required for all task operations
- Permissions enforced with Django REST Framework
+ User Authentication,
+ Custom user model (CustomUser),
+ JWT authentication with access & refresh tokens,
+ Task Management Create, update, delete, and view tasks,
+ Mark tasks as complete or incomplete,
+ User-specific tasks (each user only sees their own tasks),
+ Security Authentication required for all task operations,
+ Permissions enforced with Django REST Framework.
 
 🛠️ Tech Stack
 Backend: Django, Django REST Framework
