@@ -52,9 +52,9 @@ Create a superuser:
       URL: http://localhost:8000/api/users/register/
       Body (JSON):
 
-    {
-        "username": "testuser",
-        "email": "testuser@gmail.com"
+{
+        "username": "test_user1",
+        "email": "testuser1234@gmail.com",
         "password": "testpass"
 }
 
@@ -67,7 +67,7 @@ Create a superuser:
       Body (JSON):
 
   {
-    "username": "testuser",
+    "username": "test_user",
     "password": "testpass"
   }
 
@@ -105,7 +105,7 @@ Create a superuser:
 
       Expected Response: 200 OK, array of tasks for logged-in user.
 
-    #Create a Task
+    ## Create a Task
       Method: POST
       URL: http://localhost:8000/api/tasks/
 
@@ -115,14 +115,13 @@ Create a superuser:
 
       Body (JSON):
 
-{
-  "title": "Prepare Monthly Financial Report",
-  "description": "Compile the financial data for the month of October 2025. This includes gathering all invoices, expenses, and revenue records, analyzing discrepancies, preparing summary charts, and drafting the final report. Ensure the report follows the company's reporting standards and is ready for review by the finance manager.",
-  "status": "pending",
-  "priority": "high",
-  "due_date": "2025-10-25"
-}
-
+  {
+    "title": "Prepare Monthly Financial Report",
+    "description": "Compile the financial data for the month of October 2025. This includes gathering all invoices, expenses, and revenue records, analyzing discrepancies, preparing summary charts, and drafting the final report. Ensure the report follows the company's reporting standards and is ready for review by the finance manager.",
+    "status": "pending",
+    "priority": "high",
+    "due_date": "2025-10-25"
+  }
 
       Expected Response: 201 Created, task details returned.
 
