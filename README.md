@@ -4,16 +4,16 @@ A Django REST Framework–based API that allows users to manage their tasks with
 
 🚀 Features
 
-# User Authentication
-# Custom user model (CustomUser)
-# JWT authentication with access & refresh tokens
-# Task Management
-# Create, update, delete, and view tasks
-# Mark tasks as complete or incomplete
-# User-specific tasks (each user only sees their own tasks)
-# Security
-# Authentication required for all task operations
-# Permissions enforced with Django REST Framework
+ User Authentication
+ Custom user model (CustomUser)
+ JWT authentication with access & refresh tokens
+ Task Management
+ Create, update, delete, and view tasks
+ Mark tasks as complete or incomplete
+ User-specific tasks (each user only sees their own tasks)
+ Security
+ Authentication required for all task operations
+ Permissions enforced with Django REST Framework
 
 🛠️ Tech Stack
 Backend: Django, Django REST Framework
@@ -68,10 +68,10 @@ Create a superuser:
 
       Body (JSON):
 
-      {
-        "username": "testuser",
-        "password": "testpass"
-      }
+  {
+    "username": "testuser",
+    "password": "testpass"
+  }
 
       Expected Response: 200 OK, returns:
 
@@ -117,12 +117,14 @@ Create a superuser:
 
       Body (JSON):
 
-      {
-        "title": "New Task",
-        "description": "Task description",
-        "status": "pending",
-        "due_date": "2025-10-25"
-      }
+{
+  "title": "Prepare Monthly Financial Report",
+  "description": "Compile the financial data for the month of October 2025. This includes gathering all invoices, expenses, and revenue records, analyzing discrepancies, preparing summary charts, and drafting the final report. Ensure the report follows the company's reporting standards and is ready for review by the finance manager.",
+  "status": "pending",
+  "priority": "high",
+  "due_date": "2025-10-25"
+}
+
 
       Expected Response: 201 Created, task details returned.
 
